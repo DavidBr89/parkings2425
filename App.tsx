@@ -4,13 +4,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import ParkingsTabNavigator from "./src/navigation/ParkingsTabNavigator";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <ParkingsTabNavigator />
-      <StatusBar style="auto" />
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <ParkingsTabNavigator />
+        <StatusBar style="auto" />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
 

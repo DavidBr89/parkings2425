@@ -3,7 +3,7 @@ import React from "react";
 
 const ParkingsMapScreen = () => {
   return (
-    <View className="">
+    <View className="bg-red-500 flex-1">
       <Text>ParkingsMapScreen</Text>
     </View>
   );
