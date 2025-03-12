@@ -16,6 +16,9 @@ const ParkingsTabNavigator = () => {
       <ParkingsTab.Screen
         name="SettingsDrawer"
         component={ParkingsDrawerNavigator}
+        options={{
+          headerShown: false,
+        }}
       />
     </ParkingsTab.Navigator>
   );

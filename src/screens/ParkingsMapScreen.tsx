@@ -15,7 +15,9 @@ const ParkingsMapScreen = () => {
   return (
     <View className="flex-1">
       <MapView
+        showsUserLocation
         onUserLocationChange={(event) => {
+          console.log(event.nativeEvent.coordinate);
           if (event.nativeEvent.coordinate) {
             mapRef.current?.animateToRegion({
               latitude: event.nativeEvent.coordinate.latitude,
