@@ -10,7 +10,11 @@ const ParkingsTab = createBottomTabNavigator<ParkingsTabParamsList>();
 
 const ParkingsTabNavigator = () => {
   return (
-    <ParkingsTab.Navigator>
+    <ParkingsTab.Navigator
+      screenOptions={{
+        headerTitleStyle: { fontFamily: "Montserrat" },
+        tabBarLabelStyle: { fontFamily: "Montserrat" },
+      }}>
       <ParkingsTab.Screen name="HomeStack" component={ParkingStackNavigator} />
       <ParkingsTab.Screen name="Map" component={ParkingsMapScreen} />
       <ParkingsTab.Screen

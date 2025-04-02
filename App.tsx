@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import DarkModeContextProvider from "./src/contexts/DarkModeContext";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
+import { Provider } from "react-redux";
+import { store } from "./src/store/store";
 
 const queryClient = new QueryClient();
 
@@ -33,15 +35,21 @@ export default function App() {
     }
   }, [isFontLoaded, fontError]);
 
+  if (!isFontLoaded && !fontError) {
+    return null;
+  }
+
   return (
-    <DarkModeContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <ParkingsTabNavigator />
-          <StatusBar style="auto" />
-        </NavigationContainer>
-      </QueryClientProvider>
-    </DarkModeContextProvider>
+    <Provider store={store}>
+      <DarkModeContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer>
+            <ParkingsTabNavigator />
+            <StatusBar style="auto" />
+          </NavigationContainer>
+        </QueryClientProvider>
+      </DarkModeContextProvider>
+    </Provider>
   );
 }
 

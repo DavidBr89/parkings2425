@@ -9,6 +9,7 @@ import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchParkings } from "../api/parkings";
 import { useDarkMode } from "../contexts/DarkModeContext";
+import MyText from "../components/MyText";
 
 const ParkingsListScreen = () => {
   const { isDarkMode } = useDarkMode();
@@ -35,10 +36,17 @@ const ParkingsListScreen = () => {
       style={{
         backgroundColor: isDarkMode ? "black" : "white",
       }}>
+      <MyText>Test</MyText>
       <FlatList
         data={data?.data.results}
         renderItem={({ item }) => (
-          <Text style={{ fontFamily: "Montserrat" }}>{item.name}</Text>
+          <MyText
+            onPress={() => {
+              console.log("Test");
+            }}
+            style={{ color: "red", fontSize: 36 }}>
+            {item.name}
+          </MyText>
         )}
       />
     </View>
