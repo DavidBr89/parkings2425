@@ -7,8 +7,13 @@ import ParkingsTabNavigator from "./src/navigation/ParkingsTabNavigator";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useForegroundPermissions } from "expo-location";
 import { useEffect } from "react";
+import DarkModeContextProvider from "./src/contexts/DarkModeContext";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
 
 const queryClient = new QueryClient();
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [locationStatus, requestLocationPermission] =
@@ -18,13 +23,25 @@ export default function App() {
     requestLocationPermission();
   }, []);
 
+  const [isFontLoaded, fontError] = useFonts({
+    Montserrat: require("./assets/fonts/Montserrat.ttf"),
+  });
+
+  useEffect(() => {
+    if (isFontLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [isFontLoaded, fontError]);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <ParkingsTabNavigator />
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </QueryClientProvider>
+    <DarkModeContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <ParkingsTabNavigator />
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </QueryClientProvider>
+    </DarkModeContextProvider>
   );
 }
 

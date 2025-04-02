@@ -5,11 +5,14 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchParkings } from "../api/parkings";
+import { useDarkMode } from "../contexts/DarkModeContext";
 
 const ParkingsListScreen = () => {
+  const { isDarkMode } = useDarkMode();
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["fetchParkings"],
     queryFn: fetchParkings,
@@ -28,10 +31,15 @@ const ParkingsListScreen = () => {
   }
 
   return (
-    <View>
+    <View
+      style={{
+        backgroundColor: isDarkMode ? "black" : "white",
+      }}>
       <FlatList
         data={data?.data.results}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        renderItem={({ item }) => (
+          <Text style={{ fontFamily: "Montserrat" }}>{item.name}</Text>
+        )}
       />
     </View>
   );
