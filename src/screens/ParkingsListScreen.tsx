@@ -3,6 +3,7 @@ import {
   FlatList,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useContext } from "react";
@@ -11,8 +12,20 @@ import { fetchParkings } from "../api/parkings";
 import { useDarkMode } from "../contexts/DarkModeContext";
 import MyText from "../components/MyText";
 
+import MaterialIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { addFavorite } from "../store/favorites/slice";
+import { ParkingsStackNavProps } from "../navigation/types";
+import { useNavigation } from "@react-navigation/native";
+
 const ParkingsListScreen = () => {
   const { isDarkMode } = useDarkMode();
+  const dispatch = useAppDispatch();
+
+  const navigation =
+    useNavigation<ParkingsStackNavProps<"Home">["navigation"]>();
+
+  const favorites = useAppSelector((state) => state.favorites);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["fetchParkings"],
@@ -40,13 +53,33 @@ const ParkingsListScreen = () => {
       <FlatList
         data={data?.data.results}
         renderItem={({ item }) => (
-          <MyText
+          <TouchableOpacity
             onPress={() => {
-              console.log("Test");
+              navigation.navigate("Details", { url: item.urllinkaddress });
             }}
-            style={{ color: "red", fontSize: 36 }}>
-            {item.name}
-          </MyText>
+            className="flex flex-row justify-between items-center p-4 m-4">
+            <MyText
+              onPress={() => {
+                console.log("Test");
+              }}
+              style={{ color: "black", fontSize: 36 }}>
+              {item.name}
+            </MyText>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(addFavorite(item));
+              }}>
+              <MaterialIcons
+                name={
+                  favorites.some((p) => p.id === item.id)
+                    ? "star-minus"
+                    : "star-plus"
+                }
+                size={32}
+                color="#eedd88"
+              />
+            </TouchableOpacity>
+          </TouchableOpacity>
         )}
       />
     </View>

@@ -16,6 +16,7 @@ location: {
     lon: number ;
     lat: number;
 };
+urllinkaddress: string;
 }
 
 

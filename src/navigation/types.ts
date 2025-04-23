@@ -4,13 +4,14 @@ import { StackScreenProps } from "@react-navigation/stack";
 
 export type ParkingsStackParamsList =  {
     Home: undefined;
-    Details: undefined;
+    Details: { url: string;};
 }
 
 export type ParkingsTabParamsList = {
     HomeStack: undefined;
     Map: undefined;
     SettingsDrawer: undefined;
+    Favorites: undefined;
 }
 
 export type ParkingsDrawerParamsList = {

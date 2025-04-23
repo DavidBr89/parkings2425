@@ -11,7 +11,8 @@ import DarkModeContextProvider from "./src/contexts/DarkModeContext";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
-import { store } from "./src/store/store";
+import { persistedStore, store } from "./src/store/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const queryClient = new QueryClient();
 
@@ -41,14 +42,16 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <DarkModeContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <NavigationContainer>
-            <ParkingsTabNavigator />
-            <StatusBar style="auto" />
-          </NavigationContainer>
-        </QueryClientProvider>
-      </DarkModeContextProvider>
+      <PersistGate persistor={persistedStore}>
+        <DarkModeContextProvider>
+          <QueryClientProvider client={queryClient}>
+            <NavigationContainer>
+              <ParkingsTabNavigator />
+              <StatusBar style="auto" />
+            </NavigationContainer>
+          </QueryClientProvider>
+        </DarkModeContextProvider>
+      </PersistGate>
     </Provider>
   );
 }

@@ -11,8 +11,14 @@ const favoritesSlice = createSlice({
             // Mutable manier - Mag door het Immer package
             // state.push(action.payload);
 
-            // Immutable manier
-            return [...state, action.payload];
+            const isInState = state.some(p =>  p.id === action.payload.id);
+
+            if(!isInState) {
+                // Immutable manier
+                return [...state, action.payload];
+            }
+            return state;
+             
         },
         removeFavorite: (state, action: PayloadAction<string>) => {
             return state.filter(p => p.id !== action.payload);
@@ -23,4 +29,4 @@ const favoritesSlice = createSlice({
     }
 })
 
-export const { reducer, actions} = favoritesSlice;
+export const { reducer, actions: { addFavorite, removeFavorite, clearAll }} = favoritesSlice;
