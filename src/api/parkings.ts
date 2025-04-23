@@ -5,7 +5,7 @@ interface ParkingResponse {
     results: Parking[];
 }
 
-interface Parking {
+export interface Parking {
     name: string;
 totalcapacity: number;
 availablecapacity: number;

@@ -16,6 +16,7 @@ export type ParkingsTabParamsList = {
 export type ParkingsDrawerParamsList = {
     Native: undefined;
     Location: undefined;
+    Counter: undefined;
 }
 
 export type ParkingsStackNavProps<T extends keyof ParkingsStackParamsList> = StackScreenProps<ParkingsStackParamsList, T>;
