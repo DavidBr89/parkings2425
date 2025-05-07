@@ -6,13 +6,16 @@ import { StyleSheet } from "react-native";
 import ParkingsTabNavigator from "./src/navigation/ParkingsTabNavigator";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useForegroundPermissions } from "expo-location";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DarkModeContextProvider from "./src/contexts/DarkModeContext";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
 import { persistedStore, store } from "./src/store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import AuthStackNavigator from "./src/navigation/AuthStackNavigator";
+import { auth } from "./src/config/firebase";
+import { onAuthStateChanged, Unsubscribe } from "firebase/auth";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,8 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [locationStatus, requestLocationPermission] =
     useForegroundPermissions();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
     requestLocationPermission();
@@ -31,9 +36,20 @@ export default function App() {
   });
 
   useEffect(() => {
+    let unsubscribe: Unsubscribe;
     if (isFontLoaded || fontError) {
-      SplashScreen.hideAsync();
+      unsubscribe = onAuthStateChanged(auth, (user) => {
+        console.log("INGELOGD: ", user);
+        SplashScreen.hideAsync();
+        setIsLoggedIn((prevValue) => !prevValue);
+      });
     }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, [isFontLoaded, fontError]);
 
   if (!isFontLoaded && !fontError) {
@@ -46,7 +62,12 @@ export default function App() {
         <DarkModeContextProvider>
           <QueryClientProvider client={queryClient}>
             <NavigationContainer>
-              <ParkingsTabNavigator />
+              {auth.currentUser ? (
+                <ParkingsTabNavigator />
+              ) : (
+                <AuthStackNavigator />
+              )}
+
               <StatusBar style="auto" />
             </NavigationContainer>
           </QueryClientProvider>
