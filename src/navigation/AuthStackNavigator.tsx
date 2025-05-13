@@ -3,8 +3,9 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import { AuthStackParamsList } from "./types";
 
-const AuthStack = createStackNavigator();
+const AuthStack = createStackNavigator<AuthStackParamsList>();
 
 const AuthStackNavigator = () => {
   return (
@@ -12,8 +13,8 @@ const AuthStackNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <AuthStack.Screen name="login" component={LoginScreen} />
-      <AuthStack.Screen name="register" component={RegisterScreen} />
+      <AuthStack.Screen name="Login" component={LoginScreen} />
+      <AuthStack.Screen name="Register" component={RegisterScreen} />
     </AuthStack.Navigator>
   );
 };

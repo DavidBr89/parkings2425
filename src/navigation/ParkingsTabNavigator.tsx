@@ -8,6 +8,7 @@ import ParkingsDrawerNavigator from "./ParkingsDrawerNavigator";
 import FavoritesScreen from "../screens/FavoritesScreen";
 
 import MaterialIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import CarsStackNavigator from "./CarsStackNavigator";
 
 const ParkingsTab = createBottomTabNavigator<ParkingsTabParamsList>();
 
@@ -20,6 +21,7 @@ const ParkingsTabNavigator = () => {
       }}>
       <ParkingsTab.Screen
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="home" color={color} size={size} />
           ),
@@ -44,6 +46,16 @@ const ParkingsTabNavigator = () => {
         }}
         name="Favorites"
         component={FavoritesScreen}
+      />
+      <ParkingsTab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="car" color={color} size={size} />
+          ),
+        }}
+        name="CarsStack"
+        component={CarsStackNavigator}
       />
       <ParkingsTab.Screen
         name="SettingsDrawer"
