@@ -38,10 +38,11 @@ export default function App() {
   useEffect(() => {
     let unsubscribe: Unsubscribe;
     if (isFontLoaded || fontError) {
-      unsubscribe = onAuthStateChanged(auth, (user) => {
+      unsubscribe = onAuthStateChanged(auth, async (user) => {
         console.log("INGELOGD: ", user);
+        // Check op de user ipv. flippen van state
+        setIsLoggedIn(user !== null);
         SplashScreen.hideAsync();
-        setIsLoggedIn((prevValue) => !prevValue);
       });
     }
 
@@ -62,11 +63,8 @@ export default function App() {
         <DarkModeContextProvider>
           <QueryClientProvider client={queryClient}>
             <NavigationContainer>
-              {auth.currentUser ? (
-                <ParkingsTabNavigator />
-              ) : (
-                <AuthStackNavigator />
-              )}
+              {/* Gebruik hier de isLoggedIn state om te checken ipv. auth.currentUser */}
+              {isLoggedIn ? <ParkingsTabNavigator /> : <AuthStackNavigator />}
 
               <StatusBar style="auto" />
             </NavigationContainer>
