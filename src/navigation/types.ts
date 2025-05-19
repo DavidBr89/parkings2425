@@ -15,7 +15,7 @@ export type AuthStackParamsList = {
 export type CarssStackParamsList = {
   Cars: undefined;
   AddCar: undefined;
-  UpdateCar: undefined;
+  UpdateCar: { carId: string };
 };
 
 export type ParkingsTabParamsList = {
@@ -23,7 +23,7 @@ export type ParkingsTabParamsList = {
   Map: undefined;
   SettingsDrawer: undefined;
   Favorites: undefined;
-  CarsStack: undefined;
+  CarsStack: { screen: keyof CarssStackParamsList } | undefined;
 };
 
 export type ParkingsDrawerParamsList = {
