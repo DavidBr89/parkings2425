@@ -35,6 +35,9 @@ export type ParkingsDrawerParamsList = {
 export type ParkingsStackNavProps<T extends keyof ParkingsStackParamsList> =
   StackScreenProps<ParkingsStackParamsList, T>;
 
+export type CarsStackNavProps<T extends keyof CarssStackParamsList> =
+  StackScreenProps<CarssStackParamsList, T>;
+
 export type AuthStackNavProps<T extends keyof AuthStackParamsList> =
   StackScreenProps<AuthStackParamsList, T>;
 
