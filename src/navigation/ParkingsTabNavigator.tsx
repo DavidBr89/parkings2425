@@ -25,6 +25,7 @@ const ParkingsTabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="home" color={color} size={size} />
           ),
+          title: "Home",
         }}
         name="HomeStack"
         component={ParkingStackNavigator}
@@ -53,6 +54,7 @@ const ParkingsTabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="car" color={color} size={size} />
           ),
+          title: "Cars",
         }}
         name="CarsStack"
         component={CarsStackNavigator}
@@ -61,6 +63,7 @@ const ParkingsTabNavigator = () => {
         name="SettingsDrawer"
         component={ParkingsDrawerNavigator}
         options={{
+          title: "Settings",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="cog" color={color} size={size} />
